@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import {ref, reactive, onMounted} from 'vue';
 import {Star, StarFilled} from "@element-plus/icons-vue";
+import {useTodoItemStore} from "@/stores/TodoItemStore.ts";
 
+const TodoStore = useTodoItemStore()
 const isStared = defineModel()
+const props = defineProps(['Tid'])
 
 const icon = ref()
 onMounted(() => {
@@ -11,9 +14,11 @@ onMounted(() => {
 
 
 const handleClick = () => {
-  console.log(isStared);
   isStared.value = !isStared.value;
+  console.log("isStared.value:",isStared.value)
+
   setTimeout(() => {
+    TodoStore.onStarTask(props.Tid, isStared.value ? 1 :0)
     icon.value = isStared.value ? StarFilled :Star ;
   },1)
 }

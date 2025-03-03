@@ -3,8 +3,8 @@ import { ElMessage } from "element-plus";
 import axios from "axios";
 
 const authItemName = 'access_token'
-const serverUrl = 'http://localhost:1204'
-const port = '1204'
+const serverUrl = 'http://localhost'
+const port = '1206'
 //默认失败处理
 const defaultFailure = (message: string, code: number, url: string) => {
     console.warn(`请求地址: ${url}, 状态码: ${code}, 错误信息: ${message}`)
@@ -66,7 +66,6 @@ function internalDel(url:string,data:object,header:object,success:any,failure:an
 
 
 //二次封装axios
-
 function get(url:string, success:any, failure = defaultFailure) {
     internalGet(url, accessHeader(), success, failure)
 }
@@ -76,7 +75,7 @@ function post(url:string, data:object, success:any, failure = defaultFailure) {
 }
 //获取用户信息
 function getUserInfo(success:any, failure:any=defaultFailure) {
-    internalGet(`http://localhost:${port}/api/user/userinfo/me`,
+    internalGet(`${serverUrl}:${port}/api/user/userinfo/me`,
         accessHeader(),
         (response:any)=>{
             console.log("成功获取用户数据:",response)
@@ -87,7 +86,7 @@ function getUserInfo(success:any, failure:any=defaultFailure) {
 
 //登录
 function login(username:string,password:string,remember:boolean,success:any,failure=defaultFailure) {
-    internalPost(`http://localhost:${port}/api/user/auth/login`, {
+    internalPost(`${serverUrl}:${port}/api/user/auth/login`, {
         name: username,
         password: password
     }, {
@@ -99,7 +98,6 @@ function login(username:string,password:string,remember:boolean,success:any,fail
     }, failure)
 }
 
-
 //注册
 function register(username: string,
                   nickname: string,
@@ -109,7 +107,7 @@ function register(username: string,
                   phone: string,
                   signature: string,
                   success: any, failure = defaultFailure) {
-    internalPost(`http://localhost:${port}/api/user/auth/register`, {
+    internalPost(`${serverUrl}:${port}/api/user/auth/register`, {
         username: username,
         nickName: nickname,
         password: password,
@@ -141,7 +139,7 @@ function infoSubmit(
     success:any,
     failure=defaultFailure
     ) {
-    internalPost(`http://localhost:${port}/api/user/modify`, {
+    internalPost(`${serverUrl}:${port}/api/user/modify`, {
             nickName: nickname,
             sex: sex,
             email: email,
@@ -159,7 +157,7 @@ function  addTask(title:string,
                   tags:string[],
                   success:any,
                   failure=defaultFailure,) {
-    internalPost(`http://localhost:${port}/api/task/create`,{
+    internalPost(`${serverUrl}:${port}/api/task/create`,{
         title: title,
         description: description,
         dueDate: deadline,
@@ -184,7 +182,7 @@ function  modifyTask(id:number,
                      success:any,
                      failure=defaultFailure,){
     console.log("修改任务tags:",tags)
-    internalPut(`http://localhost:${port}/api/task/modify`,{
+    internalPut(`${serverUrl}:${port}/api/task/modify`,{
         id: id,
         title: title,
         description: description,
@@ -198,7 +196,7 @@ function  modifyTask(id:number,
 }
 //删除任务
 function  deleteTask(id:number, success:any, failure=defaultFailure) {
-    internalDel(`http://localhost:${port}/api/task/delete`,{
+    internalDel(`${serverUrl}:${port}/api/task/delete`,{
         id: id,
     }, accessHeader(), (response:any) => {
         console.log("成功删除任务:",response)
@@ -207,11 +205,26 @@ function  deleteTask(id:number, success:any, failure=defaultFailure) {
 }
 //点亮任务星标
 function  starTask(Tid:number,success:any, failure=defaultFailure) {
-
+    // console.log(Tid)
+    internalPut(`${serverUrl}:${port}/api/task/mark`, {
+        taskId: Tid,
+        markType: 1,
+        actionType: 1
+    },accessHeader(), (response:any) => {
+        console.log("成功点亮任务星标:",response)
+        success(response)
+    },failure)
 }
 //取消任务星标
 function  unstarTask(Tid:number,success:any, failure=defaultFailure) {
-
+    internalPut(`${serverUrl}:${port}/api/task/mark`, {
+        taskId: Tid,
+        markType: 1,
+        actionType: 2
+    },accessHeader(), (response:any) => {
+        console.log("成功取消任务星标:",response)
+        success(response)
+    },failure)
 }
 //完成任务
 function   completeTask(Tid:number,success:any, failure=defaultFailure) {
@@ -294,5 +307,7 @@ function unauthorized() {
             addTask,
             modifyTask,
             fetchTasks,
-            deleteTask
+            deleteTask,
+            starTask,
+            unstarTask,
         }

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { ref, reactive } from 'vue'
-import {fetchTasks} from "@/net";
+import {ref, reactive, watch} from 'vue'
+import {fetchTasks , starTask,unstarTask} from "@/net";
 
 interface TodoItemInterface {
     id: number;
@@ -8,7 +8,7 @@ interface TodoItemInterface {
     title: string
     description: string
     status: boolean
-    star: boolean
+    star: number
     dueDate: string
     createTime: string
     category: string
@@ -38,5 +38,33 @@ export const useTodoItemStore = defineStore('TodoItems', () => {
          )
     }
 
-    return {TodoItems , queryAll }
+    const onStarTask = (id:number, star:number) => {
+        console.log(id)
+        if(star==1){
+            starTask(
+                id,
+                ()=>{
+                    console.log("star success!")
+                    queryAll()
+                },
+                (error:any) => {
+                    console.log("star failure!")
+                    queryAll()
+                }
+                )
+        }else{
+            unstarTask(
+                id,
+                ()=>{
+                    console.log("unstar success!")
+                    queryAll()
+                },
+                ()=>{
+                    console.log("unstar failure!")
+                    queryAll()
+                })
+        }
+
+    }
+    return {TodoItems , queryAll ,onStarTask}
 })
