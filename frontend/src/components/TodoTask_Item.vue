@@ -84,7 +84,7 @@ const showDialog = () => {
       </div>
     </div>
     <div class="todo-task-item__actions">
-      <Done_Btn v-model="props.item.status"/>
+      <Done_Btn v-model="props.item.status" :Tid="props.item.id"/>
     </div>
   </div>
   <!--详情弹出框-->
