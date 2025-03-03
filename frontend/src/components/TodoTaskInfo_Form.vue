@@ -84,7 +84,7 @@ const modifyTodoTask = (task: any) => {
                 placeholder="Title Here"
       />
       <el-button type="text" >
-        <Star_Btn  v-model="props.item.star"/>
+        <Star_Btn  v-model="props.item.star" :Tid="props.item.id"/>
       </el-button>
     </el-form-item>
     <!-- 描述 -->

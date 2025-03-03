@@ -66,7 +66,7 @@ const showDialog = () => {
 <template>
   <div class="todo-task-item" >
     <div class="star-btn">
-      <Star_Btn v-model="props.item.star" />
+      <Star_Btn v-model="props.item.star" :Tid="props.item.id"/>
     </div>
 
     <div class="todo-task-item__content">
