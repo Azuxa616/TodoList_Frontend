@@ -205,11 +205,11 @@ function  deleteTask(id:number, success:any, failure=defaultFailure) {
 }
 //点亮任务星标
 function  starTask(Tid:number,success:any, failure=defaultFailure) {
-    // console.log(Tid)
+
     internalPut(`${serverUrl}:${port}/api/task/mark`, {
         taskId: Tid,
-        markType: 1,
-        actionType: 1
+        markType: 1,//1代表操作星标，2代表操作完成状态
+        actionType: 1//1代表点亮，2代表取消
     },accessHeader(), (response:any) => {
         console.log("成功点亮任务星标:",response)
         success(response)
@@ -228,11 +228,25 @@ function  unstarTask(Tid:number,success:any, failure=defaultFailure) {
 }
 //完成任务
 function   completeTask(Tid:number,success:any, failure=defaultFailure) {
-
+    internalPut(`${serverUrl}:${port}/api/task/mark`, {
+        taskId: Tid,
+        markType: 2,//1代表操作星标，2代表操作完成状态
+        actionType: 1//1代表点亮，2代表取消
+    },accessHeader(), (response:any) => {
+        console.log("成功任务完成:",response)
+        success(response)
+    },failure)
 }
 //撤销完成任务
 function  uncompleteTask(Tid:number,success:any, failure=defaultFailure) {
-
+    internalPut(`${serverUrl}:${port}/api/task/mark`, {
+        taskId: Tid,
+        markType: 2,//1代表操作星标，2代表操作完成状态
+        actionType: 2//1代表点亮，2代表取消
+    },accessHeader(), (response:any) => {
+        console.log("成功任务取消完成:",response)
+        success(response)
+    },failure)
 }
 
 
@@ -310,4 +324,6 @@ function unauthorized() {
             deleteTask,
             starTask,
             unstarTask,
+            completeTask,
+            uncompleteTask,
         }
