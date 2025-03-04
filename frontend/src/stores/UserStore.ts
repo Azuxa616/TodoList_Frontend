@@ -1,8 +1,11 @@
 import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
-import {getUserInfo ,deleteAccessToken} from "@/net";
+import {getUserInfo, deleteAccessToken, fetchTasks, fetchCategories,} from "@/net";
+import {useTodoItemStore} from "@/stores/TodoItemStore.ts";
 import {ElMessage} from "element-plus";
 import router from "@/router";
+
+
 
 export const useAccountStore = defineStore('userStore', () => {
     const isLoaded = ref(false);
@@ -17,22 +20,22 @@ export const useAccountStore = defineStore('userStore', () => {
         gender: '',
         signature: '',
     })
-    const UserContent=reactive({
-        categories:[
-            {
-                index:1,
-                name:'Category01',
-            },
-            {
-                index:2,
-                name:'Category02',
-            },
-            {
-                index:3,
-                name:'Category03',
-            },
-        ]
-    })
+    // const UserContent=reactive({
+    //     categories:[
+    //         // {
+    //         //     id:'1894633242174734338',
+    //         //     name:'Category01',
+    //         // },
+    //         // {
+    //         //     id:'1894670847931105281',
+    //         //     name:'Category02',
+    //         // },
+    //         // {
+    //         //     id:'1894647966497030145',
+    //         //     name:'Category03',
+    //         // },
+    //     ] as Array<CategoryInterface>,
+    // })
     const UserInfoInit=()=>{
         console.log("UserInfoInit")
         getUserInfo(
@@ -61,9 +64,26 @@ export const useAccountStore = defineStore('userStore', () => {
 
         )
     }
-    const UserContentInit=()=>{
-        console.log("UserContentInit")
-    //TODO: 需要获取分类api
-    }
-    return { isLoaded,UserInfo ,UserContent ,UserInfoInit}
+    // const UserContentInit=()=>{
+    //     const TodoStore=useTodoItemStore()
+    //     const CategoriesMap= TodoStore.CategoriesMap
+    //     fetchCategories((response:any)=>{
+    //         console.info("UserContentInit")
+    //
+    //         UserContent.categories=response;
+    //         console.log(UserContent.categories)
+    //         TodoStore.InitMap()
+    //         console.log("***",TodoStore.CategoriesMap)
+    //
+    //         for(const item of UserContent.categories){
+    //             item.containedNum = CategoriesMap.get(item.name)
+    //             console.log(CategoriesMap)
+    //         }
+    //         console.info("!%%!%!",UserContent.categories)
+    //     },()=>{
+    //         ElMessage.error("获取分类失败")
+    //     })
+    //
+    // }
+    return { isLoaded,UserInfo ,UserInfoInit}
 })

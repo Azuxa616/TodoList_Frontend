@@ -16,11 +16,8 @@ import {ElMessage} from "element-plus";
 // const infoFormStore = useTaskInfoFormStore();
 // const infoForm = storeToRefs(infoFormStore).InfoForm.value;
 
-const userStore = useAccountStore()
-const categories =storeToRefs(userStore).UserContent.value.categories
-
 const ItemStore = useTodoItemStore()
-
+const categories =ItemStore.UserContent.categories
 const props =defineProps(['item'])
 let Tags = reactive<string[]>([])
 
@@ -116,7 +113,7 @@ const modifyTodoTask = (task: any) => {
       >
         <el-option
             v-for="item in categories"
-            :key="item.index"
+            :key="item.id"
             :label="item.name"
             :value="item.name"
         />
