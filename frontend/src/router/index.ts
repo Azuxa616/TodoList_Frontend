@@ -3,6 +3,7 @@ import {unauthorized} from "@/net/index.js";
 import {ElMessage} from "element-plus";
 import {useAccountStore} from "@/stores/UserStore.ts";
 import {useTodoItemStore} from "@/stores/TodoItemStore.ts";
+
 import LoginPage from "@/pages/VisitViews/LoginPage.vue";
 import HomePage from "@/pages/HomeViews/HomePage.vue";
 import MyAccountPage from "@/pages/HomeViews/MyAccountPage.vue";
@@ -66,6 +67,7 @@ const router = createRouter({
         }
     ]
 })
+
 router.beforeEach((to, from, next) => {
     const isUnauthorized = unauthorized()
     const UserStore = useAccountStore();
@@ -98,8 +100,14 @@ router.afterEach((to, from, next) => {
     if(to.fullPath.startsWith("/home")&&!isUnauthorized){
         console.log("加载用户信息")
         UserStore.UserInfoInit()
+        setTimeout(()=>{
+            console.log("加载分类信息")
+            TodoItemStore.UserContentInit()
+        },200)
         // console.log("加载任务信息")
         //  TodoItemStore.queryAll()
+
     }
 })
+
 export default router

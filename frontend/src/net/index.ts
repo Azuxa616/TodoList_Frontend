@@ -1,6 +1,7 @@
 
 import { ElMessage } from "element-plus";
 import axios from "axios";
+import router from "@/router";
 
 const authItemName = 'access_token'
 const serverUrl = 'http://localhost'
@@ -23,8 +24,12 @@ function internalGet(url:string,header:object,success:any,failure=defaultFailure
     axios.get(url,{headers:header}).then(({data}) => {
         if(data.code === 200) {
             success(data.data)
+        }else if(data.code === 10001) {
+            ElMessage.error('请重新登录')
+            deleteAccessToken()
+            router.push('/login')
         }
-        console.log(data)
+
     }).catch(data => console.error("internalGet error:",data))
 }
 //post请求封装
@@ -47,7 +52,6 @@ function internalPost(url:string,data:object,header:object,success:any,failure:a
         }
     }).catch(data => console.error("internalPut error:",data))
 }
-
 //del请求封装
 function internalDel(url:string,data:object,header:object,success:any,failure:any,error=defaultError) {
     axios({
@@ -69,7 +73,6 @@ function internalDel(url:string,data:object,header:object,success:any,failure:an
 function get(url:string, success:any, failure = defaultFailure) {
     internalGet(url, accessHeader(), success, failure)
 }
-
 function post(url:string, data:object, success:any, failure = defaultFailure) {
     internalPost(url, data, accessHeader(), success, failure)
 }
@@ -121,6 +124,7 @@ function register(username: string,
         success(response)
     }, failure)
 }
+
 //登出
 function logout(success:any, failure = defaultFailure) {
     get(`${serverUrl}:${port}/api/user/logout`, () => {
@@ -149,6 +153,7 @@ function infoSubmit(
         success(response)
     }, failure)
 }
+
 //添加任务
 function  addTask(title:string,
                   description:string,
@@ -249,14 +254,20 @@ function  uncompleteTask(Tid:number,success:any, failure=defaultFailure) {
     },failure)
 }
 
-
-
 //获取所有任务
 function  fetchTasks(success:any, failure=defaultFailure) {
     internalGet(`http://localhost:${port}/api/task/queryAll`, accessHeader(), (response:any) => {
         console.log("成功获取用户任务:",response)
         success(response)
-    },(response)=>{console.log("!!!",response,"获取任务失败")})
+    },(response)=>{console.log(response,"获取任务失败")})
+}
+
+//获取所有分类
+function  fetchCategories(success:any, failure=defaultFailure) {
+    internalGet(`${serverUrl}:${port}/api/category/batch`, accessHeader(), (response:any) => {
+        console.log("成功获取分类:",response)
+        success(response)
+    },(response)=>{console.log(response,"获取分类失败")})
 }
 
 //重置密码
@@ -326,4 +337,5 @@ function unauthorized() {
             unstarTask,
             completeTask,
             uncompleteTask,
+            fetchCategories
         }

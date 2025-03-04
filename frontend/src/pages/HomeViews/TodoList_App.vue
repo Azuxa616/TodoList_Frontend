@@ -20,8 +20,8 @@ onMounted(()=> {
   },1)
 
 });
-const onReflash = () => {
-  console.log("ReflashTask!!");
+const onRefresh = () => {
+  console.log("RefreshTask!!");
   todoItemStore.queryAll()
   active.value = false;
   setTimeout(() => {
@@ -30,7 +30,7 @@ const onReflash = () => {
 }
 
 watch(todoItemStore.TodoItems.items, (newVal, oldVal) => {
-  onReflash();
+  onRefresh();
 })
 
 </script>
@@ -38,7 +38,7 @@ watch(todoItemStore.TodoItems.items, (newVal, oldVal) => {
 <template class="TodoApp">
   <div class="TodoApp" v-if="active">
       <AddTodo_Draw />
-    <el-button type="primary" @click="onReflash()"><el-icon><Refresh /></el-icon>Reflash</el-button>
+    <el-button type="primary" @click="onRefresh()"><el-icon><Refresh /></el-icon>Refresh</el-button>
       <TodoTask_Item v-for="item in useTodoItemStore().TodoItems.items"
         :key="item.id"
         :item="item"

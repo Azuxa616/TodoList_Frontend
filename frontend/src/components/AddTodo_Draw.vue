@@ -64,7 +64,7 @@
             >
               <el-option
                   v-for="item in categories"
-                  :key="item.index"
+                  :key="item.id"
                   :label="item.name"
                   :value="item.name"
               />
@@ -99,12 +99,16 @@ import TagEdit_FormItem from '@/components/TagEdit_FormItem.vue'
 import Star_Btn from "@/components/Star_Btn.vue";
 import {useAccountStore} from '@/stores/UserStore.ts'
 import {useTaskFormStore} from "@/stores/FormStore/AddTodoTaskFormStore.ts";
+import {useTodoItemStore} from "@/stores/TodoItemStore.ts";
 import {storeToRefs} from "pinia";
 import {CirclePlus} from "@element-plus/icons-vue";
 import type {  FormInstance, FormRules } from 'element-plus'
 
-const userStore = useAccountStore()
-const categories =storeToRefs(userStore).UserContent.value.categories
+// const userStore = useAccountStore()
+// const categories =storeToRefs(userStore).UserContent.value.categories
+
+const TodoStore =useTodoItemStore()
+const categories =TodoStore.UserContent.categories
 
 const formStore = useTaskFormStore()
 const form = storeToRefs(formStore).AddTaskForm.value
