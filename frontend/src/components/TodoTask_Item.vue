@@ -17,22 +17,38 @@ const props =defineProps(['item',"key"])
   const taskInfoDialogVisible = ref(false)
   const deleteDialogVisible = ref (false)
 
+
+interface TodoItemInterface {
+  id: number;
+  userid: string
+  title: string
+  description: string
+  status: number
+  star: number
+  dueDate: string
+  createTime: string
+  category: string
+  tags: string[]
+}
+
 //修改任务
-const modifyTodoTask = (task: any) => {
-  console.log("modifyTodoTask:", task)
+const modifyTodoTask = (task: TodoItemInterface) => {
+  console.log("修改任务", task.category)
   modifyTask(
       task.id,
       task.title,
       task.description,
       task.dueDate,
-      task.categoryName,
-      task.tagNameList,
+      task.category? task.category : "",
+      task.tags,
       (response: any) => {
         console.log('修改成功：',response)
         ElMessage.success(" 修改成功!")
       }
   )
 }
+
+
 //删除任务
 const deleteTodoTask = (task: any) => {
   deleteTask(task.id,()=>{
@@ -98,7 +114,7 @@ const showDialog = () => {
     <!--    删除确认弹出框-->
     <el-dialog v-model="deleteDialogVisible" title="Delete Task" width="40%" center>
       <div>
-        This task havn't been done, are you sure to delete it?
+        This task haven't been done, are you sure to delete it?
       </div>
       <div>
         <el-button id="delete-btn" type="danger" @click="deleteTodoTask(props.item)">Delete</el-button>

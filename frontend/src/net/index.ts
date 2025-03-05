@@ -256,7 +256,7 @@ function  uncompleteTask(Tid:number,success:any, failure=defaultFailure) {
 
 //获取所有任务
 function  fetchTasks(success:any, failure=defaultFailure) {
-    internalGet(`http://localhost:${port}/api/task/queryAll`, accessHeader(), (response:any) => {
+    internalGet(`${serverUrl}:${port}/api/task/queryAll`, accessHeader(), (response:any) => {
         console.log("成功获取用户任务:",response)
         success(response)
     },(response)=>{console.log(response,"获取任务失败")})
@@ -269,10 +269,30 @@ function  fetchCategories(success:any, failure=defaultFailure) {
         success(response)
     },(response)=>{console.log(response,"获取分类失败")})
 }
+//添加分类
+function  addCategories(names:string[],success:any, failure=defaultFailure) {
+    console.log("addCategories",names)
+    internalPost(`${serverUrl}:${port}/api/category/create`,{
+        categoryNameList: names
+    },accessHeader(), (response:any) => {
+        console.log("成功添加分类:", response)
+        success(response)
+    },(response:any)=>{console.log(response,"添加分类失败")})
+}
+//删除分类
+function  deleteCategories(names:string[],success:any, failure=defaultFailure) {
+    console.log("deleteCategories",names)
+    internalDel(`${serverUrl}:${port}/api/category/delete`,{
+        categoryNameList: names
+    },accessHeader(), (response:any) => {
+        console.log("成功删除分类:",response)
+        success(response)
+    },(response:any)=>{console.log(response,"删除分类失败")})
+}
 
 //重置密码
 function changePassword(newPassword:string,success:any,failure=defaultFailure) {
-    internalPost(`http://localhost:${port}/api/user/reset`, {
+    internalPost(`${serverUrl}:${port}/api/user/reset`, {
         password: newPassword,
     },accessHeader(), (response:any) => {
         console.log("@@@@",response,"修改密码成功")
@@ -337,5 +357,7 @@ function unauthorized() {
             unstarTask,
             completeTask,
             uncompleteTask,
-            fetchCategories
+            fetchCategories,
+            addCategories,
+            deleteCategories
         }

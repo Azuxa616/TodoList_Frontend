@@ -45,37 +45,23 @@ export const useTodoItemStore = defineStore('TodoItems', () => {
 
     const UserContent=reactive({
         categories:[
-            // {
-            //     id:'1894633242174734338',
-            //     name:'Category01',
-            // },
-            // {
-            //     id:'1894670847931105281',
-            //     name:'Category02',
-            // },
-            // {
-            //     id:'1894647966497030145',
-            //     name:'Category03',
-            // },
+
         ] as Array<CategoryInterface>,
     })
     const UserContentInit=()=>{
 
         fetchCategories((response:any)=>{
-            console.info("UserContentInit")
 
             UserContent.categories=response;
 
-            console.log(UserContent.categories)
+
             setTimeout(()=>{
                 InitMap()
-                console.log("***",CategoriesMap)
             },10)
             for(const item of UserContent.categories){
                 item.containedNum = CategoriesMap.get(item.name)?CategoriesMap.get(item.name):0
-                console.log(CategoriesMap.get(item.name))
+
             }
-            console.info("!%%!%!",UserContent.categories)
         },()=>{
             ElMessage.error("获取分类失败")
         })
@@ -84,15 +70,12 @@ export const useTodoItemStore = defineStore('TodoItems', () => {
 
     const InitMap=()=>{
         CategoriesMap.clear()
-        console.log("TT",TodoItems.items)
         for (const item of TodoItems.items) {
-            console.log("TT",item.category)
             if(!CategoriesMap.has(item.category)){
                 CategoriesMap.set(item.category,0)
             }
                 CategoriesMap.set(item.category,CategoriesMap.get(item.category)+1)
         }
-        console.log("%$%^$^",CategoriesMap)
     }
 
     const queryAll = () => {
