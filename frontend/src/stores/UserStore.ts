@@ -40,7 +40,6 @@ export const useAccountStore = defineStore('userStore', () => {
         console.log("UserInfoInit")
         getUserInfo(
             (response:any)=>{
-                console.info("UserInfo Init Successfully")
                 UserInfo.uid = response.id
                 UserInfo.nickname = response.nickName
                 UserInfo.username = response.name

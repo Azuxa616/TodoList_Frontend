@@ -51,23 +51,22 @@ watch(Tags, (newVal) => {
 //   Tags = props.item.tagNameList
 // }
 //修改任务
-const modifyTodoTask = (task: any) => {
-  console.log("modifyTodoTask:", task)
-  modifyTask(
-      task.id,
-      task.title,
-      task.description,
-      task.dueDate,
-      task.categoryName,
-      task.tagNameList,
-      (response: any) => {
-        console.log('修改成功：',response)
-        ElMessage.success(" 修改成功!")
-        ItemStore.queryAll()
-      }
-  )
-
-}
+// const modifyTodoTask = (task: any) => {
+//   console.log("modify", task.categoryName)
+//   modifyTask(
+//       task.id,
+//       task.title,
+//       task.description,
+//       task.dueDate,
+//       task.categoryName,
+//       task.tagNameList,
+//       (response: any) => {
+//         console.log('修改成功：',response)
+//         ElMessage.success(" 修改成功!")
+//         ItemStore.queryAll()
+//       }
+//   )
+// }
 
 </script>
 
