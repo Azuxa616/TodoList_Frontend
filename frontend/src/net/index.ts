@@ -199,6 +199,7 @@ function  modifyTask(id:number,
         success(response)
     }, failure)
 }
+
 //删除任务
 function  deleteTask(id:number, success:any, failure=defaultFailure) {
     internalDel(`${serverUrl}:${port}/api/task/delete`,{
@@ -208,6 +209,7 @@ function  deleteTask(id:number, success:any, failure=defaultFailure) {
         success(response)
     }, failure)
 }
+
 //点亮任务星标
 function  starTask(Tid:number,success:any, failure=defaultFailure) {
 
@@ -220,6 +222,7 @@ function  starTask(Tid:number,success:any, failure=defaultFailure) {
         success(response)
     },failure)
 }
+
 //取消任务星标
 function  unstarTask(Tid:number,success:any, failure=defaultFailure) {
     internalPut(`${serverUrl}:${port}/api/task/mark`, {
@@ -231,6 +234,7 @@ function  unstarTask(Tid:number,success:any, failure=defaultFailure) {
         success(response)
     },failure)
 }
+
 //完成任务
 function   completeTask(Tid:number,success:any, failure=defaultFailure) {
     internalPut(`${serverUrl}:${port}/api/task/mark`, {
@@ -242,6 +246,7 @@ function   completeTask(Tid:number,success:any, failure=defaultFailure) {
         success(response)
     },failure)
 }
+
 //撤销完成任务
 function  uncompleteTask(Tid:number,success:any, failure=defaultFailure) {
     internalPut(`${serverUrl}:${port}/api/task/mark`, {
@@ -262,6 +267,16 @@ function  fetchTasks(success:any, failure=defaultFailure) {
     },(response)=>{console.log(response,"获取任务失败")})
 }
 
+//按时间获取任务
+function  fetchTasksByDate(dueDate:string, success:any, failure=defaultFailure) {
+    console.log("###url",`${serverUrl}:${port}/api/task/byDueDate?dueDate=${dueDate}`),
+    internalGet(`${serverUrl}:${port}/api/task/byDueDate?dueDate=${dueDate}`,
+        accessHeader(),
+        (response:any) => {
+            console.log("成功获取用户任务:",response)
+            success(response)
+        },(response)=>{console.log(response,"获取任务失败")})
+}
 //获取所有分类
 function  fetchCategories(success:any, failure=defaultFailure) {
     internalGet(`${serverUrl}:${port}/api/category/batch`, accessHeader(), (response:any) => {
@@ -269,6 +284,7 @@ function  fetchCategories(success:any, failure=defaultFailure) {
         success(response)
     },(response)=>{console.log(response,"获取分类失败")})
 }
+
 //添加分类
 function  addCategories(names:string[],success:any, failure=defaultFailure) {
     console.log("addCategories",names)
@@ -279,6 +295,7 @@ function  addCategories(names:string[],success:any, failure=defaultFailure) {
         success(response)
     },(response:any)=>{console.log(response,"添加分类失败")})
 }
+
 //删除分类
 function  deleteCategories(names:string[],success:any, failure=defaultFailure) {
     console.log("deleteCategories",names)
@@ -298,6 +315,8 @@ function changePassword(newPassword:string,success:any,failure=defaultFailure) {
         console.log("@@@@",response,"修改密码成功")
      }, failure
     )}
+
+
 
 //token存储
 function storeAccessToken(token:object, remember:boolean, expire:number) {
@@ -339,6 +358,7 @@ function unauthorized() {
 
 //导出
         export {
+            //账号相关
             login ,
             logout,
             register ,
@@ -346,17 +366,26 @@ function unauthorized() {
             getUserInfo,
             infoSubmit ,
             changePassword,
+
+            //基础请求
             get,
             post,
+
+            //删除Token
             deleteAccessToken,
+
+            //任务相关
             addTask,
             modifyTask,
             fetchTasks,
+            fetchTasksByDate,
             deleteTask,
             starTask,
             unstarTask,
             completeTask,
             uncompleteTask,
+
+            //分类相关
             fetchCategories,
             addCategories,
             deleteCategories
