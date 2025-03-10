@@ -162,6 +162,8 @@ function  addTask(title:string,
                   tags:string[],
                   success:any,
                   failure=defaultFailure,) {
+
+    console.log("Tags:",tags)
     internalPost(`${serverUrl}:${port}/api/task/create`,{
         title: title,
         description: description,

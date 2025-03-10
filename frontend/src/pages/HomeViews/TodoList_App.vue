@@ -63,7 +63,7 @@ watch(todoItemStore.TodoItems.items, (newVal, oldVal) => {
 <!--    空状态显示-->
     <div v-if="(selectedItemStore.isSelected
                               ? useDataSelectedItemStore().SelectedTodoItems.items
-                              :useTodoItemStore().TodoItems.items ).length == 0" description="description" >
+                              :useTodoItemStore().TodoItems.items ).length == 0"  >
       <div class="title">No Task To Do</div>
       <div class="sub-title">Have A Nice Day!</div>
     </div>

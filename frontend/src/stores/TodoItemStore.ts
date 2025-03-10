@@ -78,10 +78,20 @@ export const useTodoItemStore = defineStore('TodoItems', () => {
         }
     }
 
+    watch(TodoItems.items,()=>{
+        TodoItems.items.forEach((item:any) => {
+            item.tags = item.tags.split(",")
+        })
+    })
+
     const queryAll = () => {
          fetchTasks(
              (response:any) => {
                  TodoItems.items = response
+                 TodoItems.items.forEach((item:any) => {
+                     console.log(item.title,item.tags.split(","))
+                     item.tags = item.tags.split(",")
+                 })
                  console.log("TodoItems.items:",TodoItems.items)
                  InitMap()
              },
