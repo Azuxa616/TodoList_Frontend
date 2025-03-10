@@ -63,7 +63,7 @@
                 style="width: 240px"
             >
               <el-option
-                  v-for="item in categories"
+                  v-for="item in TodoStore.UserContent.categories"
                   :key="item.id"
                   :label="item.name"
                   :value="item.name"
@@ -108,8 +108,6 @@ import type {  FormInstance, FormRules } from 'element-plus'
 // const categories =storeToRefs(userStore).UserContent.value.categories
 
 const TodoStore =useTodoItemStore()
-const categories =TodoStore.UserContent.categories
-
 const formStore = useTaskFormStore()
 const form = storeToRefs(formStore).AddTaskForm.value
 
@@ -131,6 +129,9 @@ const rules = reactive<FormRules<RuleForm>>({
           { min: 3, max: 20, message: 'Title length must be 3 to 20', trigger: 'blur' }
         ],
         detail: [
+            { required: true, message: 'Please input due date', trigger: 'blur' },
+        ],
+        category: [
             { required: true, message: 'Please input due date', trigger: 'blur' },
         ]
     }

@@ -37,6 +37,10 @@ export const useDataSelectedItemStore = defineStore('TodoItems_SelectedByDate', 
     const selectByDate = (date:string) => {
         fetchTasksByDate(date,(response:any)=>{
             SelectedTodoItems.items=response
+            SelectedTodoItems.items.forEach((item:any) => {
+                console.log(item.title,item.tags.split(","))
+                item.tags = item.tags.split(",")
+            })
             ElMessage.success("查询成功")
             console.log("获取任务成功",response)
         },(response:any)=>{
