@@ -7,10 +7,7 @@ const TodoStore = useTodoItemStore()
 const isStared = defineModel()
 const props = defineProps(['Tid'])
 
-const icon = ref()
-onMounted(() => {
-  icon.value = isStared.value ? StarFilled :Star ;
-})
+
 
 
 const handleClick = () => {
@@ -19,14 +16,13 @@ const handleClick = () => {
 
   setTimeout(() => {
     TodoStore.onStarTask(props.Tid, isStared.value ? 1 :0)
-    icon.value = isStared.value ? StarFilled :Star ;
   },1)
 }
 
 </script>
 
 <template>
-  <el-button  :icon="icon"
+  <el-button  :icon="isStared ? StarFilled :Star"
               circle
               id="star-btn"
               :class=" {'Stared':isStared }"
