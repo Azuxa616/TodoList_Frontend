@@ -74,7 +74,7 @@
           <!-- 标签 -->
           <el-form-item label="Tags"
                         :label-width="formLabelWidth">
-            <TagEdit_FormItem />
+            <TagEdit_FormItem  v-model="form.tags"/>
           </el-form-item>
         </el-form>
           <!--按钮-->
@@ -113,6 +113,8 @@ const categories =TodoStore.UserContent.categories
 const formStore = useTaskFormStore()
 const form = storeToRefs(formStore).AddTaskForm.value
 
+let Tags = reactive<string[]>([])
+
 interface RuleForm {
   title: string
   detail: string
@@ -141,6 +143,10 @@ let timer:any
 const dialog = ref(false)
 const loading = ref(false)
 
+
+watch(Tags, (newVal) => {
+  formStore.AddTaskForm.tags = newVal
+})
 
 const onClick =async(formEl: FormInstance | undefined) => {
   if (!formEl) return

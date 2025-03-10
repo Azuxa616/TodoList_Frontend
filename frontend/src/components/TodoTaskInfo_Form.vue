@@ -21,10 +21,15 @@ const categories =ItemStore.UserContent.categories
 const props =defineProps(['item'])
 let Tags = reactive<string[]>([])
 
+console.log("props:", props.item.tags)
+
 onMounted(() => {
-  console.log("mounted")
   ItemStore.queryAll()
-  console.log("props", props.item.tags)
+  Tags = props.item.tags
+  setTimeout(() => {
+    console.log("!!Tags:", Tags)
+    console.log("!!props:", props.item.tags)
+  },10)
   // Tags = props.item.tagNameList
 })
 // 详情表宽度
@@ -34,8 +39,10 @@ const formLabelWidth = '80px' // 表单项标签宽度
 //test
 
 watch(Tags, (newVal) => {
-  props.item.tagNameList = newVal
+  props.item.tags = Tags
 })
+
+
 // // 保存
 // const onSave = () => {
 //   console.log("onSave", props.item)
@@ -122,7 +129,7 @@ watch(Tags, (newVal) => {
     </el-form-item>
     <!-- 标签 -->
     <el-form-item label="Tags" :label-width="formLabelWidth" >
-      <TagEdit_FormItem v-model="Tags" />
+      <TagEdit_FormItem v-model="props.item.tags" />
     </el-form-item>
 <!--    按钮组(外置到父组件)-->
 <!--    <div>-->
