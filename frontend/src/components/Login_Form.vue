@@ -38,7 +38,7 @@
           <label for="remember">Remember me</label>
           <input type="checkbox" v-model="form.rememberMe" id="remember" />
         </div>
-          <button type="submit">Login</button>
+          <button type="submit" v-loading="loginFormStore.LoadingActive">Login</button>
         <div class="signup"> Don't have an account? <router-link to="/register">Sign Up</router-link> </div>
       </form>
 

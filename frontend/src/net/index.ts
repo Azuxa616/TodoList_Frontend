@@ -9,6 +9,7 @@ const port = '1206'
 //默认失败处理
 const defaultFailure = (message: string, code: number, url: string) => {
     console.warn(`请求地址: ${url}, 状态码: ${code}, 错误信息: ${message}`)
+    console.log("1111")
     ElMessage.warning(message)
 }
 
@@ -33,14 +34,17 @@ function internalGet(url:string,header:object,success:any,failure=defaultFailure
     }).catch(data => console.error("internalGet error:",data))
 }
 //post请求封装
-function internalPost(url:string,data:object,header:object,success:any,failure:any,error=defaultError) {
+function internalPost(url:string,data:object,header:object,success:any,failure=defaultFailure,error=defaultError) {
     axios.post(url,data,{headers:header}).then(({data}) => {
         if(data.code === 200) {
             success(data.data)
         }else{
             failure(data.message,data.code,url)
         }
-    }).catch(data => console.error("internalPost error:",data))
+    }).catch(data => {
+        console.error("internalPost error:", data.response.data)
+        failure(data.response.data.message,data.response.data.code,data.response.data.url)
+    })
 }
 //put请求封装
  function internalPut(url:string,data:object,header:object,success:any,failure:any,error=defaultError) {
@@ -88,7 +92,7 @@ function getUserInfo(success:any, failure:any=defaultFailure) {
 }
 
 //登录
-function login(username:string,password:string,remember:boolean,success:any,failure=defaultFailure) {
+function login(username:string,password:string,remember:boolean,success:any,failure:any) {
     internalPost(`${serverUrl}:${port}/api/user/auth/login`, {
         name: username,
         password: password
@@ -96,9 +100,14 @@ function login(username:string,password:string,remember:boolean,success:any,fail
         'Content-Type': 'application/json',
     }, (response:any) => {
         storeAccessToken(response.token, remember, response.expire)
-        ElMessage.success(`登录成功，欢迎 ${response.username} 来到我们的系统`)
+        console.log(response)
+        ElMessage.success(`欢迎 ${response.name} 来到我们的系统`)
         success(response)
-    }, failure)
+    },(response)=>{
+        console.log("登录失败",response)
+        ElMessage.error(response)
+        failure(response)
+    })
 }
 
 //注册
@@ -161,7 +170,7 @@ function  addTask(title:string,
                   category:string,
                   tags:string[],
                   success:any,
-                  failure=defaultFailure,) {
+                  failure=defaultFailure,)  {
 
     console.log("Tags:",tags)
     internalPost(`${serverUrl}:${port}/api/task/create`,{
