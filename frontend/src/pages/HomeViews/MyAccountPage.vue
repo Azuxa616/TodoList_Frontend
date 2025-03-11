@@ -11,9 +11,6 @@
   import {onMounted, ref} from "vue";
   import router from "@/router";
 
-  onMounted(() => {
-
-  })
 
   function goBack() {
       router.push('/home');

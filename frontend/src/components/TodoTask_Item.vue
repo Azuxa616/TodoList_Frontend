@@ -80,7 +80,7 @@ const showDialog = () => {
 </script>
 
 <template>
-  <div class="todo-task-item" >
+  <div class="todo-task-item" :class=" {'done':props.item.status}">
     <div class="star-btn">
       <Star_Btn v-model="props.item.star" :Tid="props.item.id"/>
     </div>
@@ -130,7 +130,8 @@ const showDialog = () => {
   }
   .done{
     text-decoration: line-through;
-    color: #ccc;
+    color: rgba(190, 0, 0, 0.62);
+    background: rgba(225, 222, 222, 0.26);
   }
   .todo-task-item {
     display: flex;
@@ -164,7 +165,7 @@ const showDialog = () => {
   }
   .todo-task-item:hover {
     cursor: pointer;
-    color: #ccc;
+    color: rgba(225, 222, 222, 0.26);
     background-color: rgba(255, 230, 175, 0.55);
   }
 </style>
