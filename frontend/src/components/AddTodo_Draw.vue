@@ -168,6 +168,7 @@ const onClick =async(formEl: FormInstance | undefined) => {
       }, 400)
     } else {
       console.log('error submit!', fields)
+      loading.value = false
     }
   })
 }

@@ -23,6 +23,10 @@ const onRefresh = () => {
 }
 
 const onAddCategory = () => {
+  if (newCategoryName.value.length > 10) {
+    ElMessage.error('分类名称不能超过10个字符')
+    return
+  }
   if (newCategoryName.value) {
     addCategories([newCategoryName.value],()=>{
       ElMessage.success('成功添加标签')

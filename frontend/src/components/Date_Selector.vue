@@ -73,6 +73,7 @@ let type=ref(active.value ? 'success':'primary')
 .demo-date-picker .block {
   border-right: solid 1px var(--el-border-color);
   flex: 1;
+  display: flex;
 }
 
 .demo-date-picker .block:last-child {

@@ -7,7 +7,7 @@ import Date_Selector from "@/components/Date_Selector.vue";
 import {useDataSelectedItemStore} from "@/stores/TodoItemSelectedByDate.ts";
 import {onMounted, ref, watch} from "vue";
 import {storeToRefs} from "pinia";
-import {Refresh} from "@element-plus/icons-vue";
+import {Clock, Refresh} from "@element-plus/icons-vue";
 
 const selectorActive = ref(false);
 
@@ -48,12 +48,24 @@ watch(todoItemStore.TodoItems.items, (newVal, oldVal) => {
 
 <template class="TodoApp">
   <div class="TodoApp" v-if="active">
-    <AddTodo_Draw />
-    <div class="TodoApp-header">
+    <div class="TodoApp-header-title" >
+      <div class="title">
+        <el-icon  class="icon"><Clock /></el-icon>
+        <span >My Task</span>
+      </div>
+      <div class="sub-box">
+        <AddTodo_Draw class="btn-item" />
+        <div class="sub-box-sub1" >
+          <el-button type="primary" @click="onRefresh()"><el-icon><Refresh /></el-icon>Refresh</el-button>
+        </div>
+      </div>
 
-      <el-button type="primary" @click="onRefresh()"><el-icon><Refresh /></el-icon>Refresh</el-button>
+    </div>
+    <el-divider  class="TodoApp-header-divider" />
+    <div class="TodoApp-header-date">
       <Date_Selector />
     </div>
+
     <TodoTask_Item v-for="item in (selectedItemStore.isSelected
                               ? useDataSelectedItemStore().SelectedTodoItems.items :useTodoItemStore().TodoItems.items )"
                    :key="item.id"
@@ -71,13 +83,47 @@ watch(todoItemStore.TodoItems.items, (newVal, oldVal) => {
 </template>
 
 <style scoped>
+  .TodoApp-header-date {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 5%;
+
+  }
+  .sub-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+  }
+  .sub-box-sub1{
+    display: flex;
+    padding-top: 10px;
+    position: relative;
+  }
+  .TodoApp-header-divider{
+    margin: 5px 0;
+  }
+ .TodoApp-header-title .title{
+   text-align: center;
+   font-size: 40px;
+   font-weight: bold;
+   color: #000000;
+   margin-left: 20px;
+   margin-top:0;
+   padding-top: 5px;
+ }
+  .TodoApp-header-title{
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-top:10px
+  }
   .TodoApp {
     min-height:700px;
     height: 100px;
     width: 100%;
-  }
-  .TodoApp-header {
-    display: flex;
   }
  .title{
     font-size: 40px;
@@ -90,4 +136,5 @@ watch(todoItemStore.TodoItems.items, (newVal, oldVal) => {
    text-align: center;
    color: rgba(194, 194, 194, 0.87);
  }
+
 </style>
