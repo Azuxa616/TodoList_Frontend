@@ -1,12 +1,12 @@
 <script setup lang="ts">
- import Categories_Item from "@/components/Categories_Item.vue";
- import {useAccountStore} from "@/stores/UserStore.ts";
+
  import {useTodoItemStore} from "@/stores/TodoItemStore.ts";
  import {computed, onMounted, ref} from 'vue'
  import {DocumentAdd, FolderAdd, Refresh} from "@element-plus/icons-vue";
  import {addCategories, deleteCategories} from "@/net";
  import {ElMessage} from "element-plus";
  import {storeToRefs} from "pinia";
+ import AddCategory_Dialog from "@/components/AddCategory_Dialog.vue";
 
  const TodoStore = useTodoItemStore();
  const CategoriesMap=TodoStore.CategoriesMap
@@ -93,7 +93,6 @@ let test =true
 
  //添加分类
  const onAddCategory = () => {
-
    if (newCategoryName.value) {
     addCategories([newCategoryName.value],()=>{
        ElMessage.success('成功添加标签')
@@ -117,20 +116,15 @@ let test =true
   <h1>Categories Page</h1>
   <div class="table-container" v-if="active" >
     <div class="refresh-btn">
-<!--      添加分类按钮 -->
-      <el-button  type="success"  @click="addDialogVisible=true">
-        <el-icon ><DocumentAdd/></el-icon>
-        Add Category
-      </el-button>
+      <AddCategory_Dialog> <el-icon ><DocumentAdd/></el-icon>Add Category</AddCategory_Dialog>
 <!--刷新按钮-->
       <el-button type="primary" @click="onRefresh()">
         <el-icon ><Refresh/></el-icon>
         Refresh
       </el-button>
 
-
-
     </div>
+
     <el-table :data="filterTableData" style="width: 100%" v-loading="loading">
       <el-table-column label="Category ID" prop="id" />
       <el-table-column label="Category Name" prop="name" />
@@ -155,21 +149,7 @@ let test =true
         </template>
       </el-table-column>
     </el-table>
-<!--添加分类弹窗-->
-    <el-dialog v-model="addDialogVisible" title="Add a Category" width="500" destroy-on-close>
-      <div>
-        <el-input v-model="newCategoryName" placeholder="Type Category Name" />
-      </div>
 
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button @click="onCancel">Cancel</el-button>
-          <el-button type="primary" @click="onAddCategory">
-            Confirm
-          </el-button>
-        </div>
-      </template>
-    </el-dialog>
     <!--删除分类确认弹窗-->
     <el-dialog v-model="deleteDialogVisible" title="Confirm Deletion" width="500">
       <div>
