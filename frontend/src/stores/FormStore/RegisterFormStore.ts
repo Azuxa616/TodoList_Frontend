@@ -19,8 +19,8 @@ export const useRegisterFormStore = defineStore('registerForm', () => {
         const sex = (RegisterForm.gender === 'Male') ? 1 : 2
         register(
             RegisterForm.username,
-            RegisterForm.password,
             RegisterForm.nickname,
+            RegisterForm.password,
             sex,
             RegisterForm.email,
             RegisterForm.phone,
