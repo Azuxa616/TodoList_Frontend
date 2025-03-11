@@ -69,12 +69,14 @@
                   :value="item.name"
               />
             </el-select>
+            <AddCategory_Dialog><el-icon><CirclePlus/></el-icon></AddCategory_Dialog>
           </el-form-item>
 
           <!-- 标签 -->
           <el-form-item label="Tags"
                         :label-width="formLabelWidth">
             <TagEdit_FormItem  v-model="form.tags"/>
+
           </el-form-item>
         </el-form>
           <!--按钮-->
@@ -93,15 +95,18 @@
 
 <script lang="ts" setup>
 import {reactive, ref, watch} from 'vue'
-import { ElDrawer, ElMessageBox ,ElMessage} from 'element-plus'
+
 import DateTime_Selector from './DateTime_Selector.vue'
 import TagEdit_FormItem from '@/components/TagEdit_FormItem.vue'
-import Star_Btn from "@/components/Star_Btn.vue";
-import {useAccountStore} from '@/stores/UserStore.ts'
+import AddCategory_Dialog from "@/components/AddCategory_Dialog.vue";
+
 import {useTaskFormStore} from "@/stores/FormStore/AddTodoTaskFormStore.ts";
 import {useTodoItemStore} from "@/stores/TodoItemStore.ts";
 import {storeToRefs} from "pinia";
+
 import {CirclePlus} from "@element-plus/icons-vue";
+import { ElDrawer, ElMessageBox ,ElMessage} from 'element-plus'
+
 import type {  FormInstance, FormRules } from 'element-plus'
 
 // const userStore = useAccountStore()
