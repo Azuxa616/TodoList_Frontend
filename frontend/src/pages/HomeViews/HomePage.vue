@@ -88,6 +88,6 @@
 }
 
 .home-page{
-  height: 100%;
+  height: 900px;
 }
 </style>

@@ -8,7 +8,8 @@
            style="min-width: 600px"
            size="large"
            v-loading="!isInfoLoaded"
-           status-icon>
+           status-icon
+           id="account-form">
 
     <el-form-item  id="account-info" >
       <!--头像-->
@@ -219,6 +220,7 @@ const onExit = () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
 }
 .avatar {
   width: 100px;
@@ -236,5 +238,9 @@ const onExit = () => {
 .uid{
   margin-left: 20px
 }
-
+#account-form{
+  margin-top: 20px;
+  background-color: rgba(255, 239, 209, 0.24);
+  padding: 20px;
+}
 </style>

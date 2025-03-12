@@ -113,14 +113,17 @@ let test =true
 </script>
 
 <template>
-  <h1>Categories Page</h1>
+  <div class="title-box"><span class="title">Categories Manager</span>></div>
+  <el-divider class="separator" />
   <div class="table-container" v-if="active" >
-    <div class="refresh-btn">
-      <AddCategory_Dialog> <el-icon ><DocumentAdd/></el-icon>Add Category</AddCategory_Dialog>
+    <div class="btn-box">
+<!--添加分类按钮-->
+      <AddCategory_Dialog > <el-icon ><DocumentAdd/></el-icon>Add Category</AddCategory_Dialog>
+<!--分割箱-->
+      <div class="separator-box"></div>
 <!--刷新按钮-->
       <el-button type="primary" @click="onRefresh()">
         <el-icon ><Refresh/></el-icon>
-        Refresh
       </el-button>
 
     </div>
@@ -170,5 +173,28 @@ let test =true
 </template>
 
 <style scoped>
+  .separator-box{
+    width: 10px;
+  }
+  .btn-box{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 2%;
+  }
+  .separator {
+    margin: 5px 0;
+  }
+  .title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    color: #343434;
+  }
+  .title-box{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
 
+  }
 </style>

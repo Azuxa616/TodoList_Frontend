@@ -20,6 +20,9 @@ const todoItems = storeToRefs(todoItemStore).TodoItems.value.items;
 const ItemList =selectedItemStore.isSelected
     ? useDataSelectedItemStore().SelectedTodoItems.items :useTodoItemStore().TodoItems.items
 
+let TitleDateSpan= ref("All Tasks");
+let TitleDate = ref("");
+
 let active =ref(false);
 
 onMounted(()=> {
@@ -40,6 +43,15 @@ const onRefresh = () => {
   }, 10);
 }
 
+watch(storeToRefs(selectedItemStore).isSelected ,()=>{
+  TitleDate.value = storeToRefs(selectedItemStore).selectedDate.value;
+  // setTimeout(() => {
+  //   TitleDateSpan.value = storeToRefs(selectedItemStore).isSelected.value? `Tasks in ${TitleDate.value}` : "All Tasks";
+  // },10)
+  TitleDateSpan.value = storeToRefs(selectedItemStore).isSelected.value? `Tasks in this Day` : "All Tasks";
+  // TitleDate.value = useDataSelectedItemStore().isSelected? `Tasks in this Day` : "All Tasks";
+})
+
 watch(todoItemStore.TodoItems.items, (newVal, oldVal) => {
   onRefresh();
 })
@@ -52,20 +64,24 @@ watch(todoItemStore.TodoItems.items, (newVal, oldVal) => {
       <div class="title">
         <el-icon  class="icon"><Clock /></el-icon>
         <span >My Task</span>
+
       </div>
       <div class="sub-box">
-        <AddTodo_Draw class="btn-item" />
-        <div class="sub-box-sub1" >
-          <el-button type="primary" @click="onRefresh()"><el-icon><Refresh /></el-icon>Refresh</el-button>
-        </div>
+      <AddTodo_Draw class="btn-item" />
+      </div>
+    </div>
+    <el-divider  class="TodoApp-header-divider" />
+    <div class="TodoApp-header-date">
+      <div>
+        <span class="date-title"> {{TitleDateSpan}} </span>
+      </div>
+      <div class="sub-box">
+        <Date_Selector class="date-selector" />
+        <el-button type="primary" @click="onRefresh()"><el-icon><Refresh /></el-icon></el-button>
       </div>
 
     </div>
     <el-divider  class="TodoApp-header-divider" />
-    <div class="TodoApp-header-date">
-      <Date_Selector />
-    </div>
-
     <TodoTask_Item v-for="item in (selectedItemStore.isSelected
                               ? useDataSelectedItemStore().SelectedTodoItems.items :useTodoItemStore().TodoItems.items )"
                    :key="item.id"
@@ -83,17 +99,32 @@ watch(todoItemStore.TodoItems.items, (newVal, oldVal) => {
 </template>
 
 <style scoped>
+  .TodoApp-header-date .sub-box{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-right: 3%
+  }
+  .TodoApp-header-date .date-title{
+    font-weight: bold;
+    font-size: 30px;
+    color: rgba(222, 39, 15, 0.67);
+    margin-left: 30px;
+  }
+  .date-selector {
+    margin-right: 20px;
+  }
   .TodoApp-header-date {
     display: flex;
-    justify-content: flex-end;
-    margin-right: 5%;
-
+    justify-content: space-between;
   }
   .sub-box{
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-right: 20px;
+    justify-content: center;
+
   }
   .sub-box-sub1{
     display: flex;
@@ -122,7 +153,7 @@ watch(todoItemStore.TodoItems.items, (newVal, oldVal) => {
   }
   .TodoApp {
     min-height:700px;
-    height: 100px;
+    height: 100%;
     width: 100%;
   }
  .title{

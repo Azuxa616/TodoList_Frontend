@@ -35,7 +35,9 @@
 </template>
 
 <style scoped>
-
+  .welcome-page{
+    height: 100vh;
+  }
   .welcome-row{
 
     text-align: center;

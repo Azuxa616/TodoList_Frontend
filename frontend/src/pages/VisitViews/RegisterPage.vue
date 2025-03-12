@@ -13,6 +13,6 @@ import Register_Form from '@/components/Register_Form.vue'
 
 <style>
 .register-page {
-  margin-top: 15%;
+ margin-top: 5%;
 }
 </style>
