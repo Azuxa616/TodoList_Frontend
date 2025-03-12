@@ -26,6 +26,7 @@ interface TodoItemInterface {
 export const useDataSelectedItemStore = defineStore('TodoItems_SelectedByDate', () => {
 
     const isSelected=ref(false)
+    const selectedDate = ref("")
 
     const SelectedTodoItems = reactive({
         items: [
@@ -42,6 +43,7 @@ export const useDataSelectedItemStore = defineStore('TodoItems_SelectedByDate', 
                 item.tags = item.tags.split(",")
             })
             ElMessage.success("查询成功")
+            selectedDate.value=date
             console.log("获取任务成功",response)
         },(response:any)=>{
             console.log("获取任务失败",response)
@@ -103,5 +105,5 @@ export const useDataSelectedItemStore = defineStore('TodoItems_SelectedByDate', 
     //     }
     // }
 
-    return {SelectedTodoItems,isSelected ,selectByDate,}
+    return {SelectedTodoItems,isSelected ,selectByDate,selectedDate}
 })

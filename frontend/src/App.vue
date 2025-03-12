@@ -6,15 +6,15 @@
 </script>
 
 <template>
-  <div class="app">
+  <div class="TodoList-app">
     <RouterView />
   </div>
 </template>
 
 <style scoped>
-  .app {
+  .TodoList-app {
     width: 100%;
-    height:100%;
+    height: 100%;
     margin: 0;
     top: 0;
     }

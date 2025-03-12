@@ -8,6 +8,8 @@ const selectedItemStore = useDataSelectedItemStore();
 
 const date = ref('')
 const active = ref<0|1|2>(0)
+const inputDisabled = ref<boolean>(true);
+
 
 let icon = ref (active.value? Select : Calendar)
 let type=ref(active.value ? 'success':'primary')
@@ -15,6 +17,7 @@ let type=ref(active.value ? 'success':'primary')
   const onChange = () => {
     if (active.value == 0) {
       active.value = 1
+      inputDisabled.value =false
       setTimeout(()=> {
         icon.value =Select
         type.value ='success'
@@ -27,6 +30,7 @@ let type=ref(active.value ? 'success':'primary')
         }
         icon.value =active.value ? CircleClose : Calendar
         type.value =active.value ? 'danger':'primary'
+        inputDisabled.value = true
 
       },1)
     }else if(active.value == 2){
@@ -57,6 +61,7 @@ let type=ref(active.value ? 'success':'primary')
           v-if="active"
           format="YYYY-MM-DD"
           value-format="YYYY-MM-DD"
+          :disabled="inputDisabled"
       />
       <el-button  @click="onChange()" :icon="icon" :type="type"></el-button>
     </div>
