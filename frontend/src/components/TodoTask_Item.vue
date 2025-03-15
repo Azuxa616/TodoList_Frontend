@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, ref, watch} from 'vue';
+  import {onMounted, ref, watch} from 'vue';
   import Star_Btn from "@/components/Star_Btn.vue";
   import Done_Btn from "@/components/Done_Btn.vue";
   import DateTime_Selector from "@/components/DateTime_Selector.vue";
@@ -8,9 +8,13 @@ import {onMounted, ref, watch} from 'vue';
   import {useAccountStore} from "@/stores/UserStore.ts";
   import {useTodoItemStore} from "@/stores/TodoItemStore.ts";
   import {modifyTask,deleteTask} from "@/net";
-import {ElMessage} from "element-plus";
+  import {ElMessage} from "element-plus";
+  import dayjs from 'dayjs'
 
-const props =defineProps(['item',"key"])
+  let DateTimeNow = ref(dayjs())
+  const isTimeOut = ref<boolean>(false);
+
+  const props =defineProps(['item',"key"])
   const ItemStore = useTodoItemStore()
 
   // --详情弹出框开关
@@ -30,6 +34,13 @@ interface TodoItemInterface {
   category: string
   tags: string[]
 }
+
+const TimeJudge =()=>{
+  let DateTimeNow = dayjs()
+  let dueDate = dayjs(props.item.dueDate)
+  return DateTimeNow.isAfter(dueDate);
+}
+
 
 //修改任务
 const modifyTodoTask = (task: TodoItemInterface) => {
@@ -80,7 +91,7 @@ const showDialog = () => {
 </script>
 
 <template>
-  <div class="todo-task-item" :class=" {'done':props.item.status}">
+  <div class="todo-task-item" :class=" {'done':props.item.status}" >
     <div class="star-btn">
       <Star_Btn v-model="props.item.star" :Tid="props.item.id"/>
     </div>
@@ -99,6 +110,24 @@ const showDialog = () => {
         {{props.item.description }}
       </div>
     </div>
+    <!--    分类信息显示块-->
+    <div class="todo-task-item__category"
+         :class=" {'done':props.item.status}"
+         @click="showDialog()"
+         v-if="props.item.category"
+    >
+      <span>{{props.item.category}}</span>
+    </div>
+<!--    日期信息显示块-->
+    <div class="todo-task-item__date"
+         :class=" {'done':props.item.status,'after':TimeJudge(),'before':!TimeJudge()}"
+         @click="showDialog()
+"
+    >
+      <span>{{props.item.dueDate}}</span>
+    </div>
+
+<!--    按钮组-->
     <div class="todo-task-item__actions">
       <Done_Btn v-model="props.item.status" :Tid="props.item.id"/>
     </div>
@@ -143,6 +172,47 @@ const showDialog = () => {
     position: relative;
   }
 
+ .todo-task-item__date {
+   margin-right: 5%;
+   border-radius: 5px;
+   padding: 8px;
+   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+   font-weight: bold;
+   font-size: 18px;
+   width: 200px;
+   text-align: center;
+ }
+  .todo-task-item__date.after.done {
+
+    background:radial-gradient( rgba(91, 60, 60, 0.32), rgba(73, 60, 60, 0.32));
+    color: white;
+  }
+  .todo-task-item__date.before.done {
+
+    background:radial-gradient( rgba(60, 91, 61, 0.32), rgba(73, 60, 60, 0.32));
+
+    color: white;
+  }
+
+
+  .todo-task-item__date.after{
+    background:radial-gradient( rgba(255, 0, 0, 0.71), rgba(234, 172, 172, 0.86));
+    color: white;
+  }
+  .todo-task-item__date.before{
+    background:linear-gradient(to bottom , rgb(5, 248, 51), rgba(0, 122, 255, 0.37));
+    color: white;
+  }
+
+ .todo-task-item__category {
+   margin-right: 5%;
+   border-radius: 5px;
+   padding: 8px;
+   background-color: rgb(115, 203, 255);
+   color: white;
+   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+   font-weight: bold;
+ }
  .todo-task-item__content {
     flex: 1;
   }
@@ -155,7 +225,11 @@ const showDialog = () => {
  .todo-task-item__description {
     font-size: 14px;
     margin-top: 5px;
-  }
+    text-overflow: ellipsis;
+   overflow: hidden;
+    white-space: nowrap;
+    width: 200px;
+ }
 
  .todo-task-item__actions {
     display: flex;
@@ -165,7 +239,7 @@ const showDialog = () => {
   }
   .todo-task-item:hover {
     cursor: pointer;
-    color: rgba(225, 222, 222, 0.26);
+    color: rgba(255, 5, 5, 0.81);
     background-color: rgba(255, 230, 175, 0.55);
   }
 </style>

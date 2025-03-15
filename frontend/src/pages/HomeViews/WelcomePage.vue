@@ -28,7 +28,9 @@
 
 <template>
   <div class="welcome-page">
-    <div class="welcome-row" id="title">Good {{TimeJudge()}}, {{nickname}}!</div>
+    <div class="welcome-row" id="title">
+      Good {{TimeJudge()}}, {{userStore.UserInfo.nickname}}!
+    </div>
     <div class="welcome-row" id="time" :class="{'night':isNight}">Now is {{DateTimeNow.format('YYYY-MM-DD HH:mm:ss')}}</div>
     <div class="calendar"><Calendar /></div>
   </div>

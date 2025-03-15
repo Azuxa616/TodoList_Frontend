@@ -1,5 +1,5 @@
 <template>
-  <el-calendar v-model="value"  class="calendar"/>
+  <el-calendar v-model="value" size="mini" class="calendar"/>
 </template>
 
 <script lang="ts" setup>

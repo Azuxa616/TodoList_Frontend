@@ -86,7 +86,7 @@
       </el-menu-item>
       <el-menu-item index="5" class="navi-item">
         <el-icon :size="40"><setting /></el-icon>
-        <template #title class="side-title"><span class="navi-title">Account Center</span>></template>
+        <template #title class="side-title"><span class="navi-title">Profile</span>></template>
       </el-menu-item>
       <el-menu-item index="6" class="navi-item">
         <el-icon :size="40"><InfoFilled /></el-icon>
