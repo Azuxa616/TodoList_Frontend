@@ -133,19 +133,19 @@ const showDialog = () => {
     </div>
   </div>
   <!--详情弹出框-->
-  <el-dialog v-model="taskInfoDialogVisible" title="Modify Task" width="700" center>
+  <el-dialog v-model="taskInfoDialogVisible" title="Modify Task" width="700" center custom-class="task-dialog">
       <TodoTaskInfo_Form :item="props.item"/>
     <!--    按钮组-->
-    <div>
+    <div class="dialog-footer">
       <el-button id="save-btn" type="success" @click="onSave()">Save</el-button>
-      <el-button id="save-btn" type="danger" @click="onDelete()">Delete</el-button>
+      <el-button id="delete-btn" type="danger" @click="onDelete()">Delete</el-button>
     </div>
     <!--    删除确认弹出框-->
-    <el-dialog v-model="deleteDialogVisible" title="Delete Task" width="40%" center>
-      <div>
+    <el-dialog v-model="deleteDialogVisible" title="Delete Task" width="40%" center custom-class="delete-confirm-dialog">
+      <div class="delete-confirm-message">
         This task haven't been done, are you sure to delete it?
       </div>
-      <div>
+      <div class="delete-confirm-buttons">
         <el-button id="delete-btn" type="danger" @click="deleteTodoTask(props.item)">Delete</el-button>
         <el-button id="cancel-btm"  @click="deleteDialogVisible = false">Cancel</el-button>
       </div>
@@ -165,70 +165,77 @@ const showDialog = () => {
   .todo-task-item {
     display: flex;
     align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    width: 90%;
-    margin-left: 5%;
+    padding: 15px;
+    border-radius: 8px;
+    width: 92%;
+    margin: 12px auto;
     position: relative;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    background-color: #ffffff;
   }
 
  .todo-task-item__date {
    margin-right: 5%;
-   border-radius: 5px;
-   padding: 8px;
-   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+   border-radius: 8px;
+   padding: 8px 12px;
+   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
    font-weight: bold;
-   font-size: 18px;
-   width: 200px;
+   font-size: 16px;
+   width: 180px;
    text-align: center;
+   transition: all 0.3s ease;
  }
   .todo-task-item__date.after.done {
-
-    background:radial-gradient( rgba(91, 60, 60, 0.32), rgba(73, 60, 60, 0.32));
+    background: radial-gradient(rgba(91, 60, 60, 0.32), rgba(73, 60, 60, 0.32));
     color: white;
   }
   .todo-task-item__date.before.done {
-
-    background:radial-gradient( rgba(60, 91, 61, 0.32), rgba(73, 60, 60, 0.32));
-
+    background: radial-gradient(rgba(60, 91, 61, 0.32), rgba(73, 60, 60, 0.32));
     color: white;
   }
-
 
   .todo-task-item__date.after{
-    background:radial-gradient( rgba(255, 0, 0, 0.71), rgba(234, 172, 172, 0.86));
+    background: radial-gradient(rgba(255, 0, 0, 0.71), rgba(234, 172, 172, 0.86));
     color: white;
+    animation: pulse 2s infinite;
   }
   .todo-task-item__date.before{
-    background:linear-gradient(to bottom , rgb(5, 248, 51), rgba(0, 122, 255, 0.37));
+    background: linear-gradient(to bottom, rgba(5, 248, 51, 0.9), rgba(0, 122, 255, 0.37));
     color: white;
   }
 
  .todo-task-item__category {
    margin-right: 5%;
-   border-radius: 5px;
-   padding: 8px;
+   border-radius: 8px;
+   padding: 8px 12px;
    background-color: rgb(115, 203, 255);
    color: white;
-   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
    font-weight: bold;
+   transition: all 0.3s ease;
  }
  .todo-task-item__content {
     flex: 1;
+    padding: 0 10px;
   }
 
  .todo-task-item__title {
     font-size: 18px;
     font-weight: bold;
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
   }
 
  .todo-task-item__description {
     font-size: 14px;
     margin-top: 5px;
     text-overflow: ellipsis;
-   overflow: hidden;
+    overflow: hidden;
     white-space: nowrap;
     width: 200px;
+    color: #666;
+    transition: color 0.3s ease;
  }
 
  .todo-task-item__actions {
@@ -239,7 +246,52 @@ const showDialog = () => {
   }
   .todo-task-item:hover {
     cursor: pointer;
-    color: rgba(255, 5, 5, 0.81);
-    background-color: rgba(255, 230, 175, 0.55);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 245, 222, 0.7);
+  }
+
+  /* 脉冲动画效果，用于到期日期提醒 */
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+    }
+  }
+
+  /* 弹出框样式 */
+  :deep(.task-dialog) {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .dialog-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .delete-confirm-message {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #606266;
+    text-align: center;
+  }
+
+  .delete-confirm-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  :deep(.delete-confirm-dialog) {
+    border-radius: 12px;
+    overflow: hidden;
   }
 </style>

@@ -171,13 +171,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
 <!--      提交按钮-->
       <el-form-item>
-        <el-button type="primary" @click="submitForm(ruleFormRef)">
+        <el-button type="primary" @click="submitForm(ruleFormRef)" class="signup-btn">
           Sign Up
         </el-button>
       </el-form-item>
     </el-form>
     <div class="signup"> Already have an account?
-      <router-link to="/login">Login now</router-link>
+      <router-link to="/login" class="login-link">Login now</router-link>
     </div>
   </div>
 
@@ -186,23 +186,24 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 <style scoped>
 
 label {
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 10px;
   font-size: 16px;
+  color: #333;
 }
 
 input {
   border: none;
   border-bottom: 1px solid #898989;
-  padding: 10px;
+  padding: 12px;
   width: 100%;
-  transition: color 2s;
+  transition: all 0.3s ease;
   position: relative; /* 为伪元素定位做准备 */
-
+  border-radius: 4px;
 }
 
 .error {
-  color: red;
+  color: #f56c6c;
   font-size: 14px;
   margin-top: 5px;
 }
@@ -210,47 +211,137 @@ input {
 input:focus {
   outline: none;
   border-bottom: 2px solid #14a8f1;
+  box-shadow: 0 5px 15px rgba(20, 168, 241, 0.1);
+}
+
+:deep(.el-input__wrapper) {
+  box-shadow: none !important;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+:deep(.el-input__wrapper:hover) {
+  box-shadow: 0 0 0 1px #14a8f1 !important;
+}
+
+:deep(.el-input__wrapper.is-focus) {
+  box-shadow: 0 0 0 1px #14a8f1 !important;
+}
+
+:deep(.el-form-item) {
+  margin-bottom: 22px;
 }
 
 .title {
-  font-size: 30px;
+  font-size: 32px;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  color: #14a8f1;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.title::after {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 3px;
+  background-color: #14a8f1;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
 }
 
 .RegisterForm {
   background: #ffffff;
-  border: 1px solid black;
+  border: none;
   border-radius: 15px;
-  padding: 20px;
+  padding: 30px;
   margin: 50px auto;
   width: 500px;
   display: flex;
   flex-direction: column;
-  box-shadow: 5px 5px 10px gray;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
-button {
+.RegisterForm:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+.signup-btn {
   margin: 20px auto;
-  background-color: #14a8f1;
+  background: linear-gradient(to right, #14a8f1, #00c2ff);
   color: #ffffff;
   border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
+  border-radius: 8px;
+  padding: 12px 20px;
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   width: 100%;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
-button:hover {
-  background-color: #8ecbec;
-  cursor: pointer;
+.signup-btn:hover {
+  background: linear-gradient(to right, #0b86c3, #00a8e6);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(20, 168, 241, 0.3);
+}
+
+:deep(.el-segmented) {
+  --el-segmented-hover-bg-color: rgba(20, 168, 241, 0.1);
+  --el-segmented-selected-bg-color: #14a8f1;
+  --el-segmented-selected-text-color: white;
+  --el-segmented-selected-hover-bg-color: #0b86c3;
 }
 
 .signup {
-  font-size: 18px;
-  text-align: left;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 15px;
+  color: #606266;
+}
+
+.login-link {
+  color: #14a8f1;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.login-link:hover {
+  color: #0b86c3;
+}
+
+.login-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #0b86c3;
+  transition: width 0.3s ease;
+}
+
+.login-link:hover::after {
+  width: 100%;
+}
+
+:deep(.el-textarea__inner) {
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  border: 1px solid #dcdfe6;
+}
+
+:deep(.el-textarea__inner:focus) {
+  border-color: #14a8f1;
+  box-shadow: 0 0 0 1px #14a8f1;
 }
 </style>
