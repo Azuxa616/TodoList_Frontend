@@ -12,6 +12,8 @@ import {useTodoItemStore} from "@/stores/TodoItemStore.ts";
 import {storeToRefs} from "pinia";
 import {onMounted, reactive, ref,watch} from "vue";
 import {ElMessage} from "element-plus";
+import AddCategory_Dialog from "@/components/AddCategory_Dialog.vue";
+import { CirclePlus } from "@element-plus/icons-vue";
 
 // const infoFormStore = useTaskInfoFormStore();
 // const infoForm = storeToRefs(infoFormStore).InfoForm.value;
@@ -117,7 +119,7 @@ watch(Tags, (newVal) => {
           size="large"
           clearable
           filterable
-          style="width: 240px"
+          style="width: 200px"
           class="category-select"
       >
         <el-option
@@ -127,8 +129,7 @@ watch(Tags, (newVal) => {
             :value="item.name"
         />
       </el-select>
-
-
+      <AddCategory_Dialog class="add-category-button"><el-icon> <CirclePlus/> </el-icon></AddCategory_Dialog>
     </el-form-item>
     <!-- 标签 -->
     <el-form-item label="Tags" :label-width="formLabelWidth" class="tags-item">
@@ -248,5 +249,8 @@ watch(Tags, (newVal) => {
 :deep(.el-tag .el-tag__close:hover) {
   background-color: #14a8f1;
   color: white;
+}
+.add-category-button{
+  margin-left: 10px;
 }
 </style>

@@ -48,7 +48,7 @@ let test =true
 
  const deleteCategory = (item: CategoryInterface) => {
   deleteCategories([item.name],()=>{
-    ElMessage.success('成功删除标签')
+    ElMessage.success('成功删除分类')
     onRefresh()
     deleteDialogVisible.value = false
     deleteItem = {
@@ -57,7 +57,7 @@ let test =true
       containedNum: 0
     }
   },()=>{
-    ElMessage.error('删除标签失败')
+    ElMessage.error('删除分类失败')
   })
  }
 
@@ -95,12 +95,12 @@ let test =true
  const onAddCategory = () => {
    if (newCategoryName.value) {
     addCategories([newCategoryName.value],()=>{
-       ElMessage.success('成功添加标签')
+       ElMessage.success('成功添加分类')
        onRefresh()
        newCategoryName.value = ''
        addDialogVisible.value = false
     },()=>{
-       ElMessage.error('添加标签失败')
+       ElMessage.error('添加分类失败')
     })
    }
     addDialogVisible.value = false
@@ -113,62 +113,51 @@ let test =true
 </script>
 
 <template>
-  <div class="title-box"><span class="title">Categories Manager</span>></div>
+  <div class="title-box"><span class="title">分类管理</span></div>
   <el-divider class="separator" />
   <div class="table-container" v-if="active" >
     <div class="btn-box">
-<!--添加分类按钮-->
-      <AddCategory_Dialog > <el-icon ><DocumentAdd/></el-icon>Add Category</AddCategory_Dialog>
-<!--分割箱-->
+      <AddCategory_Dialog > <el-icon ><DocumentAdd/></el-icon>添加分类</AddCategory_Dialog>
       <div class="separator-box"></div>
-<!--刷新按钮-->
       <el-button type="primary" @click="onRefresh()">
         <el-icon ><Refresh/></el-icon>
       </el-button>
-
     </div>
 
     <el-table :data="filterTableData" style="width: 100%" v-loading="loading">
-      <el-table-column label="Category ID" prop="id" />
-      <el-table-column label="Category Name" prop="name" />
-      <el-table-column label="Contained Task" prop="containedNum" />
+      <el-table-column label="分类ID" prop="id" />
+      <el-table-column label="分类名称" prop="name" />
+      <el-table-column label="包含任务数" prop="containedNum" />
       <el-table-column align="right">
         <template #header>
-          <el-input v-model="search" size="small" placeholder="Type to search by name" />
-
+          <el-input v-model="search" size="small" placeholder="按名称搜索" />
         </template>
         <template #default="scope">
-
-<!--       删除标签按钮   -->
           <el-button
               size="small"
               type="danger"
               @click="handleDelete(scope.$index, scope.row)"
           >
-            Delete
+            删除
           </el-button>
-
-
         </template>
       </el-table-column>
     </el-table>
 
-    <!--删除分类确认弹窗-->
-    <el-dialog v-model="deleteDialogVisible" title="Confirm Deletion" width="500">
+    <el-dialog v-model="deleteDialogVisible" title="确认删除" width="500">
       <div>
-        There some tasks in this category, do you want to delete it?
+        该分类中还有任务，确定要删除吗？
       </div>
 
       <template #footer>
         <div class="dialog-footer">
-          <el-button @click="addDialogVisible = false">Cancel</el-button>
+          <el-button @click="addDialogVisible = false">取消</el-button>
           <el-button type="danger" @click="deleteCategory(deleteItem)">
-            Delete
+            删除
           </el-button>
         </div>
       </template>
     </el-dialog>
-
   </div>
 </template>
 

@@ -61,8 +61,8 @@
 
 <template>
 
-  <el-button type="warning" @click="dialogFormVisible = true">
-    Change Password
+  <el-button class="change-password-button" type="warning" @click="dialogFormVisible = true">
+    修改密码
   </el-button>
 
   <el-dialog v-model="dialogFormVisible" title="Change Password" width="800" >
@@ -103,5 +103,8 @@
 </template>
 
 <style scoped>
-
+.change-password-button{
+  margin-left: 10px;
+  width: 30%;
+}
 </style>

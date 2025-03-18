@@ -25,45 +25,44 @@
     </el-form-item>
 
     <!--用户名-->
-    <el-form-item label="Username:" prop="username">
-<!--      <el-input class="username" v-model="form.username"></el-input>-->
+    <el-form-item label="用户名:" prop="username">
       <span class="username">{{form.username}} </span>
     </el-form-item>
-<!--昵称-->
-    <el-form-item label="Nickname:" prop="nickname">
+    <!--昵称-->
+    <el-form-item label="昵称:" prop="nickname">
       <el-input v-model="form.nickname" />
     </el-form-item>
-<!--邮箱-->
-    <el-form-item label="Email:" prop="email">
+    <!--邮箱-->
+    <el-form-item label="邮箱:" prop="email">
       <el-input v-model="form.email" />
     </el-form-item>
 
-<!--    电话号码-->
-    <el-form-item label="Phone Number:" prop="phone">
+    <!--    手机号码-->
+    <el-form-item label="手机号码:" prop="phone">
       <el-input v-model="form.phone" />
     </el-form-item>
-<!--    性别-->
-    <el-form-item label="Gender:" prop="gender">
+    <!--    性别-->
+    <el-form-item label="性别:" prop="gender">
       <el-radio-group v-model="form.gender">
-        <el-radio-button value="male">Male</el-radio-button>
-        <el-radio-button value="female">Female</el-radio-button>
+        <el-radio-button value="male">男</el-radio-button>
+        <el-radio-button value="female">女</el-radio-button>
       </el-radio-group>
     </el-form-item>
-<!--    个签-->
-    <el-form-item label="Signature:">
+    <!--    个性签名-->
+    <el-form-item label="个性签名:">
       <el-input v-model="form.signature" type="textarea" />
     </el-form-item>
 
     <div>
       <div>
-        <el-button id="save-btn" type="success" @click="onSubmit(ruleFormRef)">Save</el-button>
+        <el-button id="save-btn" type="success" @click="onSubmit(ruleFormRef)">保存</el-button>
       </div>
       <div class="Btn-group">
         <ChangePassword_Dialog id="change-password-btn" />
-        <el-button @click="onCancel" id="cancel-btn">Reset</el-button>
+        <el-button @click="onCancel" id="cancel-btn">重置</el-button>
       </div>
       <div>
-        <el-button id="save-btn" type="danger" @click="onExit">Logout</el-button>
+        <el-button id="save-btn" type="danger" @click="onExit">退出登录</el-button>
       </div>
     </div>
   </el-form>
@@ -108,35 +107,34 @@ const regex_phone = /^[1]([3-9])[0-9]{9}$/;
 
 const validateUsername = (rule:any, value:string, callback:any) => {
   if(!value.match(regex_username)){
-    callback(new Error('Username should only contain Letters, Numbers and Chinese Characters.'))
+    callback(new Error('用户名只能包含字母、数字和中文字符。'))
   }
   callback()
 }
 
 const validateNickname = (rule:any, value:string, callback:any) => {
-  //username和nickname共用一个正则表达式
   if(!value.match(regex_username)){
-    callback(new Error('Nickname should only contain Letters, Numbers and Chinese Characters.'))
+    callback(new Error('昵称只能包含字母、数字和中文字符。'))
   }
   callback()
 }
 
 const validateEmail = (rule:any, value:string, callback:any) => {
   if(!value.match(regex_email)){
-    callback(new Error('Invalid Email Address.'))
+    callback(new Error('邮箱地址格式不正确。'))
   }
   callback()
 }
 
 const validatePhone = (rule:any, value:string, callback:any) => {
   if(!value.match(regex_phone)){
-    callback(new Error('Invalid Phone Number.'))
+    callback(new Error('手机号码格式不正确。'))
   }
   callback()
 }
 const rules = reactive<FormRules<RuleForm>>({
   username: [
-    { required: true, message: 'Please input Username', trigger: 'blur' },
+    { required: true, message: '请输入用户名', trigger: 'blur' },
     { validator: validateUsername, trigger: 'blur' },
   ],
   nickname: [
@@ -144,15 +142,15 @@ const rules = reactive<FormRules<RuleForm>>({
   ],
   gender: [
     {
-      required: true, message: 'Please select Gender', trigger: 'change'
+      required: true, message: '请选择性别', trigger: 'change'
     }
   ],
   email: [
-    { required: true, message: 'Please input Email', trigger: 'blur' },
+    { required: true, message: '请输入邮箱', trigger: 'blur' },
     { validator: validateEmail, trigger: 'blur' },
   ],
   phone: [
-    { required: true, message: 'Please input Phone Number', trigger: 'blur' },
+    { required: true, message: '请输入手机号码', trigger: 'blur' },
     { validator: validatePhone, trigger: 'blur' }
   ],
 })

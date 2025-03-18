@@ -51,7 +51,6 @@ const onCancel = () => {
       type="text" 
       class="add-category-btn" 
       @click="addDialogVisible=true"
-      :icon="Plus"
   >
     <slot></slot>
   </el-button>
@@ -95,12 +94,16 @@ const onCancel = () => {
   padding: 5px;
   border-radius: 4px;
   font-size: 16px;
+  border: 1px solid #67c23a;
+  margin-left: 10px;
+  width: auto;
+  height: 30px;
 }
 
 .add-category-btn:hover {
   color: #5daf33;
   background-color: rgba(103, 194, 58, 0.1);
-  transform: scale(1.1);
+  transform: scale(1.01);
 }
 
 :deep(.category-dialog) {
@@ -168,13 +171,14 @@ const onCancel = () => {
 
 .confirm-btn {
   background: linear-gradient(to right, #67c23a, #85c464);
-  border: none;
+  
 }
 
 .confirm-btn:hover {
   background: linear-gradient(to right, #5daf33, #7ab356);
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(103, 194, 58, 0.2);
+
 }
 
 :deep(.el-dialog__headerbtn:hover .el-dialog__close) {
