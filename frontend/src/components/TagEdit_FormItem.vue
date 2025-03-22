@@ -71,7 +71,7 @@ import {nextTick, onMounted, ref, toRef} from 'vue'
           size="small" 
           @click="showInput"
           type="primary"
-          :icon="Plus"
+          
       >
         添加标签
       </el-button>

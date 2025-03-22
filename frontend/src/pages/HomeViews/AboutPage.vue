@@ -23,7 +23,7 @@ import {Star, StarFilled} from "@element-plus/icons-vue";
 
       <div class="detail">
         这是一个前后端分离的 TodoList Web 应用<br>
-        前端使用 <span  class="sub-span">Vue3</span> + <span class="sub-span">Vite2</span> +  <span class="sub-span">TypeScript</span> + <span class="sub-span">Element-Plus</span> 开发
+        前端使用 <span  class="sub-span">Vue3</span> + <span class="sub-span">Vite2</span> + <span class="sub-span">Pinia</span>+ <span class="sub-span">TypeScript</span> + <span class="sub-span">Element-Plus</span> 开发
       </div>
       前端仓库地址：
       <a href="https://github.com/Azuxa616/TodoList_Frontend" target="_blank">Github</a>

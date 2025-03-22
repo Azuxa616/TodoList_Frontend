@@ -89,8 +89,8 @@ export const useTodoItemStore = defineStore('TodoItems', () => {
              (response:any) => {
                  TodoItems.items = response
                  TodoItems.items.forEach((item:any) => {
-                     console.log(item.title,item.tags.split(","))
-                     item.tags = item.tags.split(",")
+                    //  console.log(item.title,item.tags.split(","))
+                     item.tags = item.tags?item.tags.split(","):[]
                  })
                  console.log("TodoItems.items:",TodoItems.items)
                  InitMap()

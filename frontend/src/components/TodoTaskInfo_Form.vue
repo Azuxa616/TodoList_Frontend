@@ -123,7 +123,7 @@ watch(Tags, (newVal) => {
           class="category-select"
       >
         <el-option
-            v-for="item in categories"
+            v-for="item in ItemStore.UserContent.categories"
             :key="item.id"
             :label="item.name"
             :value="item.name"

@@ -45,13 +45,21 @@
         console.log('submit!')
         formStore.submitPass()
         dialogFormVisible.value = false
+        form.pass_new= ''
+        form.pass_check = ''
       } else {
         console.log('error submit!')
         dialogFormVisible.value = false
+        form.pass_new= ''
+        form.pass_check = ''
       }
     })
   }
-
+  const handleClose = () => {
+    dialogFormVisible.value = false
+    form.pass_new= ''
+    form.pass_check = ''
+  }
   const resetForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.resetFields()
@@ -65,7 +73,7 @@
     修改密码
   </el-button>
 
-  <el-dialog v-model="dialogFormVisible" title="Change Password" width="800" >
+  <el-dialog v-model="dialogFormVisible" title="修改密码" width="800" >
     <el-form
         ref="ruleFormRef"
         :model="form"
@@ -79,11 +87,11 @@
 <!--        <el-input v-model="form.pass_pre" autocomplete="off" type="password"/>-->
 <!--      </el-form-item>-->
 
-      <el-form-item label="New Password" :label-width="formLabelWidth" prop="pass_new" >
+      <el-form-item label="新密码" :label-width="formLabelWidth" prop="pass_new" >
         <el-input v-model="form.pass_new" autocomplete="off" type="password"/>
       </el-form-item>
 
-      <el-form-item label="Confirm Password" :label-width="formLabelWidth"  prop="pass_check">
+      <el-form-item label="确认密码" :label-width="formLabelWidth"  prop="pass_check">
         <el-input v-model="form.pass_check" autocomplete="off" type="password"/>
       </el-form-item>
 
@@ -92,10 +100,10 @@
 
     <template #footer>
       <div class="dialog-footer">
-        <el-button @click="dialogFormVisible= false">Cancel</el-button>
-        <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+        <el-button @click="handleClose">取消</el-button>
+        <el-button @click="resetForm(ruleFormRef)">重置</el-button>
         <el-button type="primary" @click="submitForm(ruleFormRef)">
-          Confirm
+          确认
         </el-button>
       </div>
     </template>

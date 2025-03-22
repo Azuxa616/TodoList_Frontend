@@ -7,7 +7,7 @@ import {useTodoItemStore} from "@/stores/TodoItemStore.ts";
 import LoginPage from "@/pages/VisitViews/LoginPage.vue";
 import HomePage from "@/pages/HomeViews/HomePage.vue";
 import MyAccountPage from "@/pages/HomeViews/MyAccountPage.vue";
-import TodoListApp from "@/pages/HomeViews/TodoList_App.vue";
+import TodoListAppPage from "@/pages/HomeViews/TodoListAppPage.vue";
 import RegisterPage from "@/pages/VisitViews/RegisterPage.vue";
 import WelcomePage from "@/pages/HomeViews/WelcomePage.vue";
 import AboutPage from "@/pages/HomeViews/AboutPage.vue";
@@ -51,7 +51,7 @@ const router = createRouter({
                 {
                     name:'todoApp',
                     path: 'todo',
-                    component:TodoListApp
+                    component:TodoListAppPage
                 },
                 {
                     name:'categoryManager',

@@ -51,7 +51,7 @@ const modifyTodoTask = (task: TodoItemInterface) => {
       task.description,
       task.dueDate,
       task.category? task.category : "",
-      task.tags,
+      task.tags? task.tags : [],
       (response: any) => {
         console.log('修改成功：',response)
         ElMessage.success(" 修改成功!")

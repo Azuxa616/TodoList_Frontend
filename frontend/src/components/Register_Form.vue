@@ -38,66 +38,66 @@ const genderOptions = ['Male','Female'];
 
 const validateUsername = (rule:any, value:string, callback:any) => {
   if(!value.match(regex_username)){
-    callback(new Error('Username should only contain Letters, Numbers and Chinese Characters.'))
+    callback(new Error('用户名只能包含字母、数字和中文字符'))
   }
   callback()
 }
 const validateNickname = (rule:any, value:string, callback:any) => {
   if(!value.match(regex_username) && value.length > 0){
-    callback(new Error('Username should only contain Letters, Numbers and Chinese Characters.'))
+    callback(new Error('昵称只能包含字母、数字和中文字符'))
   }
   callback()
 }
 
 const validatePasswordCheck = (rule:any, value:string, callback:any) => {
   if(value!== form.password){
-    callback(new Error('Two Passwords are Different.'))
+    callback(new Error('两次输入的密码不一致'))
   }
   callback()
 }
 
 const validateEmail = (rule:any, value:string, callback:any) => {
   if(!value.match(regex_email)){
-    callback(new Error('Invalid Email Address.'))
+    callback(new Error('请输入有效的邮箱地址'))
   }
   callback()
 }
 
 const validatePhone = (rule:any, value:string, callback:any) => {
   if(!value.match(regex_phone)){
-    callback(new Error('Invalid Phone Number.'))
+    callback(new Error('请输入有效的手机号码'))
   }
   callback()
 }
 const rules = reactive<FormRules<RuleForm>>({
   username: [
-    { required: true, message: 'Please input Username', trigger: 'blur' },
-    {max:20, message: 'Username length should between 1 and 20', trigger: 'blur' },
+    { required: true, message: '请输入用户名', trigger: 'blur' },
+    {max:20, message: '用户名长度应在1-20个字符之间', trigger: 'blur' },
     { validator: validateUsername, trigger: 'blur' },
   ],
   nickname: [
-    {max:20, message: 'Nickname length should less than 20', trigger: 'blur' },
+    {max:20, message: '昵称长度不能超过20个字符', trigger: 'blur' },
     { validator: validateNickname, trigger: 'blur' },
   ],
   password: [
-      { required: true, message: 'Please input Password', trigger: 'blur' },
-      { min: 6,max:20, message: 'Password length should between 6 and 20', trigger: 'blur' },
+      { required: true, message: '请输入密码', trigger: 'blur' },
+      { min: 6,max:20, message: '密码长度应在6-20个字符之间', trigger: 'blur' },
   ],
   confirmPassword: [
-      { required: true, message: 'Enter the Password again', trigger: 'blur' },
+      { required: true, message: '请再次输入密码', trigger: 'blur' },
       { validator: validatePasswordCheck, trigger: 'blur' },
   ],
   gender: [
     {
-      required: true, message: 'Please select Gender', trigger: 'change'
+      required: true, message: '请选择性别', trigger: 'change'
     }
   ],
   email: [
-    { required: true, message: 'Please input Email', trigger: 'blur' },
+    { required: true, message: '请输入邮箱地址', trigger: 'blur' },
     { validator: validateEmail, trigger: 'blur' },
   ],
   phone: [
-    { required: true, message: 'Please input Phone Number', trigger: 'blur' },
+    { required: true, message: '请输入手机号码', trigger: 'blur' },
     { validator: validatePhone, trigger: 'blur' }
   ],
 })
@@ -128,56 +128,62 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         :size="formSize"
         status-icon
     >
-      <div class="title">Sign Up</div>
+      <div class="title">用户注册</div>
 
-<!--      用户名-->
-      <el-form-item label="Username" prop="username">
-        <el-input v-model="form.username" />
+      <!--用户名-->
+      <el-form-item label="用户名" prop="username">
+        <el-input v-model="form.username" placeholder="请输入用户名" />
       </el-form-item>
       <!--昵称-->
-      <el-form-item label="Nickname" prop="nickname">
-        <el-input v-model="form.nickname" />
+      <el-form-item label="昵称" prop="nickname">
+        <el-input v-model="form.nickname" placeholder="请输入昵称（选填）" />
       </el-form-item>
 
-<!--      密码-->
-      <el-form-item label="Password" prop="password">
-        <el-input v-model="form.password"  type="password"/>
+      <!--密码-->
+      <el-form-item label="密码" prop="password">
+        <el-input v-model="form.password" type="password" placeholder="请输入密码" show-password />
       </el-form-item>
 
-<!--      确认密码-->
-      <el-form-item label="Confirm Password" prop="confirmPassword">
-        <el-input v-model="form.confirmPassword" type="password" />
+      <!--确认密码-->
+      <el-form-item label="确认密码" prop="confirmPassword">
+        <el-input v-model="form.confirmPassword" type="password" placeholder="请再次输入密码" show-password />
       </el-form-item>
 
-<!--      性别-->
-      <el-form-item label="Gender" prop="gender">
-        <el-segmented v-model="form.gender" :options="genderOptions" />
+      <!--性别-->
+      <el-form-item label="性别" prop="gender">
+        <el-segmented v-model="form.gender" :options="['男', '女']" />
       </el-form-item>
 
-<!--      邮箱-->
-      <el-form-item label="Email" prop="email">
-        <el-input v-model="form.email" />
+      <!--邮箱-->
+      <el-form-item label="邮箱" prop="email">
+        <el-input v-model="form.email" placeholder="请输入邮箱地址" />
       </el-form-item>
 
-<!--      手机号码-->
-      <el-form-item label="Phone Number" prop="phone">
-        <el-input v-model="form.phone" />
+      <!--手机号码-->
+      <el-form-item label="手机号码" prop="phone">
+        <el-input v-model="form.phone" placeholder="请输入手机号码" />
       </el-form-item>
 
-<!--      签名-->
-      <el-form-item label="Signature" prop="signature">
-        <el-input v-model="form.signature" type="textarea" />
+      <!--签名-->
+      <el-form-item label="个性签名" prop="signature">
+        <el-input 
+          v-model="form.signature" 
+          type="textarea" 
+          placeholder="请输入个性签名（选填）"
+          :rows="3"
+        />
       </el-form-item>
 
-<!--      提交按钮-->
+      <!--提交按钮-->
       <el-form-item>
         <el-button type="primary" @click="submitForm(ruleFormRef)" class="signup-btn">
-          Sign Up
+          注册
         </el-button>
       </el-form-item>
     </el-form>
-    <div class="signup"> Already have an account?
-      <router-link to="/login" class="login-link">Login now</router-link>
+    <div class="signup">
+      已有账号？
+      <router-link to="/login" class="login-link">立即登录</router-link>
     </div>
   </div>
 
@@ -233,10 +239,10 @@ input:focus {
 }
 
 .title {
-  font-size: 32px;
+  font-size: 36px;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   color: #14a8f1;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -245,10 +251,10 @@ input:focus {
 .title::after {
   content: "";
   position: absolute;
-  width: 60px;
-  height: 3px;
-  background-color: #14a8f1;
-  bottom: -10px;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #14a8f1, #00c2ff);
+  bottom: -12px;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 2px;
@@ -257,40 +263,40 @@ input:focus {
 .RegisterForm {
   background: #ffffff;
   border: none;
-  border-radius: 15px;
-  padding: 30px;
+  border-radius: 20px;
+  padding: 40px;
   margin: 50px auto;
   width: 500px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
 
 .RegisterForm:hover {
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
   transform: translateY(-5px);
 }
 
 .signup-btn {
-  margin: 20px auto;
-  background: linear-gradient(to right, #14a8f1, #00c2ff);
+  margin: 30px auto;
+  background: linear-gradient(135deg, #14a8f1, #00c2ff);
   color: #ffffff;
   border: none;
-  border-radius: 8px;
-  padding: 12px 20px;
-  font-size: 16px;
+  border-radius: 12px;
+  padding: 14px 24px;
+  font-size: 18px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   width: 100%;
   font-weight: 600;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
 }
 
 .signup-btn:hover {
-  background: linear-gradient(to right, #0b86c3, #00a8e6);
+  background: linear-gradient(135deg, #0b86c3, #00a8e6);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(20, 168, 241, 0.3);
+  box-shadow: 0 8px 20px rgba(20, 168, 241, 0.3);
 }
 
 :deep(.el-segmented) {
@@ -303,7 +309,7 @@ input:focus {
 .signup {
   font-size: 16px;
   text-align: center;
-  margin-top: 15px;
+  margin-top: 20px;
   color: #606266;
 }
 
@@ -313,6 +319,7 @@ input:focus {
   text-decoration: none;
   transition: all 0.3s ease;
   position: relative;
+  margin-left: 8px;
 }
 
 .login-link:hover {
@@ -326,7 +333,7 @@ input:focus {
   height: 2px;
   bottom: -2px;
   left: 0;
-  background-color: #0b86c3;
+  background: linear-gradient(to right, #14a8f1, #00c2ff);
   transition: width 0.3s ease;
 }
 
