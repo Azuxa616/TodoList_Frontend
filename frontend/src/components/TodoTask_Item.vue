@@ -133,21 +133,21 @@ const showDialog = () => {
     </div>
   </div>
   <!--详情弹出框-->
-  <el-dialog v-model="taskInfoDialogVisible" title="Modify Task" width="700" center custom-class="task-dialog">
+  <el-dialog v-model="taskInfoDialogVisible" title="修改任务" width="700" center custom-class="task-dialog">
       <TodoTaskInfo_Form :item="props.item"/>
     <!--    按钮组-->
     <div class="dialog-footer">
-      <el-button id="save-btn" type="success" @click="onSave()">Save</el-button>
-      <el-button id="delete-btn" type="danger" @click="onDelete()">Delete</el-button>
+      <el-button id="save-btn" type="success" @click="onSave()">保存</el-button>
+      <el-button id="delete-btn" type="danger" @click="onDelete()">删除</el-button>
     </div>
     <!--    删除确认弹出框-->
-    <el-dialog v-model="deleteDialogVisible" title="Delete Task" width="40%" center custom-class="delete-confirm-dialog">
+    <el-dialog v-model="deleteDialogVisible" title="删除任务" width="40%" center custom-class="delete-confirm-dialog">
       <div class="delete-confirm-message">
-        This task haven't been done, are you sure to delete it?
+        该任务未完成，确定要删除吗？
       </div>
       <div class="delete-confirm-buttons">
-        <el-button id="delete-btn" type="danger" @click="deleteTodoTask(props.item)">Delete</el-button>
-        <el-button id="cancel-btm"  @click="deleteDialogVisible = false">Cancel</el-button>
+        <el-button id="delete-btn" type="danger" @click="deleteTodoTask(props.item)">删除</el-button>
+        <el-button id="cancel-btm"  @click="deleteDialogVisible = false">取消</el-button>
       </div>
     </el-dialog>
   </el-dialog>

@@ -324,6 +324,7 @@ function changePassword(newPassword:string,success:any,failure=defaultFailure) {
         password: newPassword,
     },accessHeader(), (response:any) => {
         console.log("@@@@",response,"修改密码成功")
+        success()
      }, failure
     )}
 

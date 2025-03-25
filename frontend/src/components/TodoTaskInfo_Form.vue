@@ -82,7 +82,7 @@ watch(Tags, (newVal) => {
 <template>
   <el-form :model="props.item" size="large" class="todo-info-form">
     <!-- 标题 -->
-    <el-form-item label="Title" :label-width="formLabelWidth" class="title-item">
+    <el-form-item label="标题" :label-width="formLabelWidth" class="title-item">
       <el-input v-model="props.item.title"
                 autocomplete="off"
                 style="width: 300px"
@@ -94,7 +94,7 @@ watch(Tags, (newVal) => {
       </el-button>
     </el-form-item>
     <!-- 描述 -->
-    <el-form-item label="Description" :label-width="formLabelWidth" class="description-item">
+    <el-form-item label="描述" :label-width="formLabelWidth" class="description-item">
       <el-input
           v-model="props.item.description"
           style="width: 240px"
@@ -107,12 +107,12 @@ watch(Tags, (newVal) => {
     </el-form-item>
 
     <!-- 截止日期 -->
-    <el-form-item label="Deadline" :label-width="formLabelWidth" class="deadline-item">
+    <el-form-item label="截止日期" :label-width="formLabelWidth" class="deadline-item">
       <DateTime_Selector v-model="props.item.dueDate" />
     </el-form-item>
 
     <!--分类-->
-    <el-form-item label="Category" :label-width="formLabelWidth" class="category-item">
+    <el-form-item label="分类" :label-width="formLabelWidth" class="category-item">
       <el-select
           v-model="props.item.category"
           placeholder="Select"
@@ -132,7 +132,7 @@ watch(Tags, (newVal) => {
       <AddCategory_Dialog class="add-category-button"><el-icon> <CirclePlus/> </el-icon></AddCategory_Dialog>
     </el-form-item>
     <!-- 标签 -->
-    <el-form-item label="Tags" :label-width="formLabelWidth" class="tags-item">
+    <el-form-item label="标签" :label-width="formLabelWidth" class="tags-item">
       <TagEdit_FormItem v-model="props.item.tags" />
     </el-form-item>
 <!--    按钮组(外置到父组件)-->
